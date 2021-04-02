@@ -3,7 +3,7 @@ service: sls-strapi
 provider:
   name: aws
   runtime: nodejs12.x
-  profile: default
+  #profile: default
   logRetentionInDays: ${self:custom.vars.logRetentionInDays, 1}
   region: eu-west-1
   environment:
