@@ -1,7 +1,6 @@
-on:
-  push:
-    branches:
-      - master
+on: push
+    #branches:
+    #  - master
 
 # Specify what jobs to run
 jobs:
