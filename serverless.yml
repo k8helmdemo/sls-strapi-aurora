@@ -4,8 +4,9 @@ provider:
   name: aws
   runtime: nodejs12.x
   #profile: default
-  logRetentionInDays: ${self:custom.vars.logRetentionInDays, 1}
-  region: eu-west-1
+  logRetentionInDays: 3
+  #logRetentionInDays: ${self:custom.vars.logRetentionInDays, 1}
+  region: us-east-1
   environment:
     ADMIN_JWT_SECRET: "Just using dummy"
   #vpc:
