@@ -1,0 +1,47 @@
+service: sls-strapi
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: default
+  logRetentionInDays: ${self:custom.vars.logRetentionInDays, 1}
+  region: eu-west-1
+  environment:
+    ADMIN_JWT_SECRET: "Just using dummy"
+  #vpc:
+  #  securityGroupIds:
+  #    - sg-04a57c0a8bf07189b
+  #    - sg-03f3ecc7dd28a7392
+  #  subnetIds:
+  #    - subnet-0bb06e435ec915c5c
+  #    - subnet-06a7005c30dc7fdf4
+
+package:
+  exclude:
+    - ./**
+  include:
+    - node_modules/**
+    - api/**
+    - config/**
+    - extensions/**
+    - plugins/**
+    - package.json
+    - app.js
+
+functions:
+  api:
+    handler: app.handler
+    memorySize: 1024
+    timeout: 24
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{any+}
+          method: ANY
+          cors: true
+
+plugins:
+  - serverless-offline

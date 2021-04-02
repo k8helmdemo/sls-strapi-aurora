@@ -1,0 +1,39 @@
+on:
+  push:
+    branches:
+      - master
+
+# Specify what jobs to run
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest 
+    env: #Setup environmental variables for serverless deployment
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    steps:
+      # Use github defaut action to trigger action in this repo. Mandatory
+      # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#using-the-checkout-action
+      - uses: actions/checkout@v1 
+
+      #- name: npm install dependencies
+      #  run: npm install
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: add -D serverless-offline # will run `yarn install` command
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: add serverless-http # will run `yarn build` command
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: test # will run `yarn test` command
+    
+      - name: Reducing the size of node_modules folder
+        run: ./scripts/trim-node-modules.sh
+        
+      - name: Serverless
+        uses: serverless/github-action@v1.53.0
+        with:
+          args: deploy
