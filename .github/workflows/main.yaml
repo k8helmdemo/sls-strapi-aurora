@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: '12.x'
       - run: yarn  add -D serverless-offline
-      - run: yarn add add serverless-http
+      - run: yarn add serverless-http
       #- uses: borales/actions-yarn@v2.0.0
       #  with:
       #    cmd: add -D serverless-offline # will run `yarn install` command
