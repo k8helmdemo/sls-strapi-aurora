@@ -19,15 +19,20 @@ jobs:
       #- name: npm install dependencies
       #  run: npm install
       - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: add -D serverless-offline # will run `yarn install` command
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: add serverless-http # will run `yarn build` command
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: test # will run `yarn test` command
+      - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: yarn  add -D serverless-offline
+    - run: yarn add add serverless-http
+      #- uses: borales/actions-yarn@v2.0.0
+      #  with:
+      #    cmd: add -D serverless-offline # will run `yarn install` command
+      #- uses: borales/actions-yarn@v2.0.0
+      #  with:
+      #    cmd: add serverless-http # will run `yarn build` command
+      3- uses: borales/actions-yarn@v2.0.0
+      #  with:
+      #    cmd: test # will run `yarn test` command
     
       - name: Reducing the size of node_modules folder
         run: ./scripts/trim-node-modules.sh
